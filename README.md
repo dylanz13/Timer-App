@@ -1,10 +1,20 @@
-# My Personal Project
+# Study Application
 
-## A subtitle
+### An application providing the Pomodoro and Flowtime Study Techniques
 
-A *bulleted* list:
-- item 1
-- item 2
-- item 3
+**What will the application do**?
+<ul> The application will make focusing on any type of work more painless
+by utilizing the pomodoro and flowtime study techniques.
+</ul>
 
-An example of text with **bold** and *italic* fonts.  
+**Who will use it**?
+<ul> Anybody who needs to get some work done - anything that requires time and effort - can 
+appreciate the convenience this application brings.
+</ul>
+
+**Why is this project of interest to me**?
+
+<ul> As a full-time student, I have relied heavily on both the pomodoro and flowtime studying
+techniques, so I thought it would be great if to make an application that allows these methods
+to become more convenient for anybody to use.
+</ul>
