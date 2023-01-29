@@ -18,3 +18,9 @@ appreciate the convenience this application brings.
 techniques, so I thought it would be great if to make an application that allows these methods
 to become more convenient for anybody to use.
 </ul>
+
+
+## User Stories
+<ul>
+As a user, I want to be able to add a subject of focus <br>
+</ul>
