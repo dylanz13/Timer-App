@@ -23,4 +23,7 @@ to become more convenient for anybody to use.
 ## User Stories
 <ul>
 As a user, I want to be able to add a subject of focus <br>
+As a user, I want to be able to add a description to any selected subject <br>
+As a user, I want to be able to add a time to the end of any selected subject <br>
+As a user, I want to be able to see the past tasks that I have completed<br>
 </ul>
