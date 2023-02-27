@@ -1,5 +1,7 @@
 package model;
 
+import ui.TimerApp;
+
 import java.util.ArrayList;
 
 //A timer class that increments in seconds, also incrementing a subject's remaining time by -1 every second
@@ -30,7 +32,7 @@ public class Timer {
             long elapsedSeconds = elapsedTime / 1000;
 
             if (prevSec != elapsedSeconds) {
-                printSeconds(this.remainingTime);
+                TimerApp.printSeconds(this.remainingTime);
 
                 System.out.println();
                 this.remainingTime--;
@@ -62,29 +64,6 @@ public class Timer {
         }
     }
 
-    //effects: a print function that formats and prints seconds into hh:mm:ss
-    public static void printSeconds(long time) {
-        String format = "%02d";
-        ArrayList<Long> output = new ArrayList<>();
-
-        long remainingHours = time / 3600;
-        long remainingMinutes = (time - remainingHours * 3600) / 60;
-        long remainingSeconds = (time - remainingHours * 3600 - remainingMinutes * 60);
-
-        if (remainingHours > 0) {
-            output.add(remainingHours);
-            output.add(remainingMinutes);
-        } else if (remainingMinutes > 0) {
-            output.add(remainingMinutes);
-        }
-        output.add(remainingSeconds);
-
-        for (int i = 0; i < output.size() - 1; i++) {
-            System.out.print(output.get(i) + ":");
-        }
-        System.out.printf(format, output.get(output.size() - 1));
-    }
-
     //effects: returns the time remaining in seconds
     public long getRemainingTime() {
         return remainingTime;
@@ -94,6 +73,11 @@ public class Timer {
     //effects: stops the timer by breaking the loop initiated by start()
     public void stop() {
         this.cancel = true;
+    }
+
+    //effects: returns true if the timer is stopped
+    public boolean isStopped() {
+        return (getRemainingTime() <= 1);
     }
 
     //modifies: this

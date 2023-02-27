@@ -23,8 +23,7 @@ public class Detail {
         return this.description;
     }
 
-    public void printDetail() {
-
-        //Timer.printSeconds(this.secondsRemaining);
-    }
+    /* public void printDetail() {
+        Timer.printSeconds(this.secondsRemaining);
+    }*/
 }

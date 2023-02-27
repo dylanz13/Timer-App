@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//A test class that makes sure subject is implemented correctly
+//A test class that makes sure Subject is implemented correctly
 public class SubjectTests {
     private Subject s;
 

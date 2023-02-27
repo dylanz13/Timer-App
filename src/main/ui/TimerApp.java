@@ -123,7 +123,7 @@ public class TimerApp {
         } else if (command.equals("v")) {
             System.out.println();
             for (Subject s : subjects) {
-                s.printSubject();
+                printSubject(s);
             }
             if (subjects.isEmpty()) {
                 System.out.println("Subjects all done!\n");
@@ -131,7 +131,7 @@ public class TimerApp {
         } else if (command.equals("p")) {
             System.out.println();
             for (Subject s : completedSubjects) {
-                s.printSubject();
+                printSubject(s);
             }
             if (completedSubjects.isEmpty()) {
                 System.out.println("\nNothing to see here!");
@@ -139,7 +139,22 @@ public class TimerApp {
         } else {
             System.out.println("Unknown Command");
         }
+    }
 
+    //effects: prints out the subject, and the allotted time given to said subject
+    private void printSubject(Subject s) { //TODO: re-write into a toString() method
+        System.out.println("Subject: " + s.getDescription() + ",");
+        System.out.print("Time: ");
+        TimerApp.printSeconds(s.getSecondsRemaining());
+        System.out.println(".");
+        if (s.getDetails().size() != 0) {
+            System.out.println(s.getDescription() + " Details:");
+            for (int i = 0; i < s.getDetails().size() - 1; i++) {
+                System.out.println(" " + s.getDetails().get(i).getDescription() + ",");
+            }
+            System.out.println(" " + s.getDetails().get(s.getDetails().size() - 1).getDescription() + ".");
+        }
+        System.out.println();
     }
 
     //effects: a third set of menus after the user pressed "m", "e" to edit a subject
@@ -173,6 +188,29 @@ public class TimerApp {
                 System.out.println("Unknown Command");
                 break;
         }
+    }
+
+    //effects: a print function that formats and prints seconds into hh:mm:ss
+    public static void printSeconds(long time) {
+        String format = "%02d";
+        ArrayList<Long> output = new ArrayList<>();
+
+        long remainingHours = time / 3600;
+        long remainingMinutes = (time - remainingHours * 3600) / 60;
+        long remainingSeconds = (time - remainingHours * 3600 - remainingMinutes * 60);
+
+        if (remainingHours > 0) {
+            output.add(remainingHours);
+            output.add(remainingMinutes);
+        } else if (remainingMinutes > 0) {
+            output.add(remainingMinutes);
+        }
+        output.add(remainingSeconds);
+
+        for (int i = 0; i < output.size() - 1; i++) {
+            System.out.print(output.get(i) + ":");
+        }
+        System.out.printf(format, output.get(output.size() - 1));
     }
 
 

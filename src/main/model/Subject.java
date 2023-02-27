@@ -58,21 +58,4 @@ public class Subject {
     public void countDown() {
         this.secondsRemaining--;
     }
-
-    //effects: prints out the subject, and the allotted time given to said subject
-    public void printSubject() { //TODO: re-write into a toString() method
-        System.out.println("Subject: " + getDescription() + ",");
-        System.out.print("Time: ");
-        Timer.printSeconds(getSecondsRemaining());
-        System.out.println(".");
-        if (getDetails().size() != 0) {
-            System.out.println(getDescription() + " Details:");
-            for (int i = 0; i < getDetails().size() - 1; i++) {
-                getDetails().get(i).printDetail();
-            }
-            System.out.println(" " + getDetails().get(getDetails().size() - 1).getDescription() + ".");
-        }
-        System.out.println();
-    }
-
 }
