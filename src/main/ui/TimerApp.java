@@ -10,9 +10,9 @@ import java.util.ArrayList;
 //Main UI interface for my application
 public class TimerApp {
 
-    public static boolean keepGoing = true;
-    public static ArrayList<Subject> subjects;
-    public static ArrayList<Subject> completedSubjects;
+    private static boolean keepGoing = true;
+    private static ArrayList<Subject> subjects;
+    private static ArrayList<Subject> completedSubjects;
     private static Timer timer;
     Scanner input;
 
@@ -62,6 +62,7 @@ public class TimerApp {
             manageSubjects(input.next());
         } else if (command.equals("q")) {
             System.out.println("Goodbye!");
+            timer.stop();
             keepGoing = false;
         } else {
             System.out.println("Unknown Command");
@@ -80,7 +81,7 @@ public class TimerApp {
         if (time > 0) {
             Runnable r = () -> {
                 TimerApp.timer = new Timer(time);
-                timer.start();
+                timer.start(subjects, completedSubjects);
             };
             new Thread(r).start();
         } else {
@@ -88,7 +89,7 @@ public class TimerApp {
         }
     }
 
-    //effects: displacs a second set of commands after the user pressed "m"
+    //effects: display a second set of commands after the user pressed "m"
     private void displaySubjectListMenu() {
         System.out.println("press a to add a subject of focus");
         System.out.println("press d to delete subjects of focus");
@@ -125,7 +126,7 @@ public class TimerApp {
                 s.printSubject();
             }
             if (subjects.isEmpty()) {
-                System.out.println("\nSubjects all done!");
+                System.out.println("Subjects all done!\n");
             }
         } else if (command.equals("p")) {
             System.out.println();
