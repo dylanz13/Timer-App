@@ -28,7 +28,7 @@ public class JsonWriterTest {
     @Test
     void testWriterEmptyWorkroom() {
         try {
-            JsonWriter writer = new JsonWriter("./data/testWriterEmptyWorkroom.json");
+            JsonWriter writer = new JsonWriter("./data/testWriterEmptyEverything.json");
             writer.open();
             writer.add(new ArrayList<>(), "inc");
             writer.add(new ArrayList<>(), "com");
