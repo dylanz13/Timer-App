@@ -17,10 +17,8 @@ public class Timer {
              necessary fields to their appropriate values */
     public Timer(int time) {
         this.remainingTime = time;
-        System.out.println("Time Starts Now!");
         startTime = System.currentTimeMillis();
         this.prevSec = 0;
-        this.cancel = false;
     }
 
     /*effects: loops until remaining time is <= 0, incrementing the remaining seconds by -1,
@@ -32,7 +30,7 @@ public class Timer {
             long elapsedSeconds = elapsedTime / 1000;
 
             if (prevSec != elapsedSeconds) {
-                TimerApp.printSeconds(this.remainingTime);
+                System.out.print(TimerApp.formatSeconds(this.remainingTime));
 
                 System.out.println();
                 this.remainingTime--;
@@ -41,13 +39,13 @@ public class Timer {
             }
 
             if (cancel) {
-                System.out.println("Timer Cancelled!");
                 break;
             }
         }
         if (this.remainingTime <= 0) {
             System.out.println("Your Timer is Done!");
             //TODO: Delve into this rabbit hole
+            this.cancel = true;
             System.out.println("(bug: you have to input anything to reset the scanner)");
         }
     }
@@ -75,8 +73,8 @@ public class Timer {
         this.cancel = true;
     }
 
-    //effects: returns true if the timer is stopped
-    public boolean isStopped() {
+    //effects: returns true if the timer is currently running
+    public boolean isRunning() {
         return (getRemainingTime() <= 1);
     }
 

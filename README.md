@@ -26,7 +26,8 @@ As a user, I want to be able to add a subject of focus <br>
 As a user, I want to be able to add a description to any selected subject <br>
 As a user, I want to be able to add a time to the end of any selected subject <br>
 As a user, I want to be able to see the past subjects that I have completed<br>
-As a user, I want to be able to select a time that will count down as I do my work, automatically giving myself
-any breaks (which will print out in the terminal). This timer should also deduct time from the time I have
-assigned any given subject of focus, printing out an alert when this happens and pausing the timer.<br>
+As a user, I want to be able to select a time that will count down as I do my work. This timer should also deduct time from the time I have
+assigned any given subject of focus, printing out an alert when this happens.<br>
+As a user, I want to be able to save my subject list and current timer state to file (if I so choose) <br>
+As a user, I want to be able to be able to load my subject list and current timer state from file (if I so choose) <br>
 </ul>

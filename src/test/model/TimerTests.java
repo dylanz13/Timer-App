@@ -30,13 +30,13 @@ public class TimerTests {
     @Test
     public void testStop() {
         t.stop();
-        assertFalse(t.isStopped());
+        assertFalse(t.isRunning());
     }
 
     @Test
     public void testStartNoSubjects() {
         t.start(new ArrayList<>(), new ArrayList<>());
-        assertTrue(t.isStopped());
+        assertTrue(t.isRunning());
     }
 
     @Test

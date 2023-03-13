@@ -1,11 +1,16 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+import ui.TimerApp;
+
 import java.util.ArrayList;
 
 /*
 A class that contains details pertaining to a specific subject of focus, including a descriptor, details,
  and time allotted */
-public class Subject {
+public class Subject implements Writable {
     private String description;
     private ArrayList<Detail> details;
     private int secondsRemaining;
@@ -15,6 +20,14 @@ public class Subject {
     public Subject(String description, int secondsRemaining) {
         this.description = description;
         this.details = new ArrayList<>();
+        this.secondsRemaining = Math.max(secondsRemaining, 0);
+    }
+
+    //modifies: this
+    //effects: constructs a subject
+    public Subject(String description, ArrayList<Detail> details, int secondsRemaining) {
+        this.description = description;
+        this.details = details;
         this.secondsRemaining = Math.max(secondsRemaining, 0);
     }
 
@@ -53,9 +66,36 @@ public class Subject {
         this.secondsRemaining += seconds;
     }
 
+    //requires: seconds > 0
+    //modifies: this
+    //effects: sets seconds to the remaining seconds
+    public void setSecondsRemaining(int secondsRemaining) {
+        this.secondsRemaining = secondsRemaining;
+    }
+
     //modifies: this
     //effects: increments seconds remaining by -1
     public void countDown() {
         this.secondsRemaining--;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", description);
+        json.put("details", detailsToJson());
+        json.put("time left", secondsRemaining);
+        return json;
+    }
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray detailsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Detail d : details) {
+            jsonArray.put(d.toJson());
+        }
+
+        return jsonArray;
     }
 }
