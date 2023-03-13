@@ -3,8 +3,6 @@ package ui;
 import model.Detail;
 import model.Timer;
 import model.Subject;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -88,10 +86,10 @@ public class TimerApp {
         } else {
             System.out.println("Unknown Command");
         }
-        breifPause();
+        briefPause();
     }
 
-    private void breifPause() {
+    private void briefPause() {
         try {
             Thread.sleep(900);
         } catch (InterruptedException e) {

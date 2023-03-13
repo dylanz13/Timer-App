@@ -4,8 +4,6 @@ import model.Subject;
 import model.Timer;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import ui.TimerApp;
-
 
 import java.io.*;
 import java.util.ArrayList;

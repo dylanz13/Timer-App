@@ -1,7 +1,11 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,6 +23,14 @@ public class SubjectTests {
         assertEquals("Math", s.getDescription());
         assertEquals(120, s.getSecondsRemaining());
         assertTrue(s.getDetails().isEmpty());
+    }
+
+    @Test
+    void testSecondConstructor() {
+        s = new Subject("Math", new ArrayList<>(), 120);
+        assertEquals("Math", s.getDescription());
+        assertEquals(120, s.getSecondsRemaining());
+        assertEquals(0,s.getDetails().size());
     }
 
     @Test
@@ -53,6 +65,12 @@ public class SubjectTests {
     }
 
     @Test
+    void testSetSeconds() {
+        s.setSecondsRemaining(300);
+        assertEquals(300, s.getSecondsRemaining());
+    }
+
+    @Test
     void testCountDown() {
         s.countDown();
         assertEquals(119, s.getSecondsRemaining());
@@ -60,6 +78,15 @@ public class SubjectTests {
             s.countDown();
         }
         assertEquals(9, s.getSecondsRemaining());
+    }
+
+    @Test
+    void testToJson() {
+        JSONObject jsonObject = s.toJson();
+        assertEquals("Math", jsonObject.getString("name"));
+        assertEquals(120, jsonObject.getInt("time left"));
+        JSONArray jsonArray = jsonObject.getJSONArray("details");
+        assertEquals(0, jsonArray.length());
     }
 
     //TODO: add a toString() method test once implementation is finished

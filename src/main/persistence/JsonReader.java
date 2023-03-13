@@ -4,7 +4,6 @@ import model.Detail;
 import model.Subject;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import ui.SubjectManager;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -61,7 +60,7 @@ public class JsonReader {
         if (jsonArray != null) {
             for (int i = 0; i < jsonArray.length(); i++) {
                 tempSubjectArray.add(new Subject(jsonArray.getJSONObject(i).getString("name"),
-                        toDetails(((JSONObject) jsonArray.get(i)).getJSONArray("details")),
+                        toDetails(jsonArray.getJSONObject(i).getJSONArray("details")),
                         jsonArray.getJSONObject(i).getInt("time left")));
             }
         }

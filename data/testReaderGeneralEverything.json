@@ -1,0 +1,22 @@
+{
+    "Subjects of Focus": [
+        {
+            "name": "Math 100",
+            "time left": 113,
+            "details": [
+                {"description": "Is"},
+                {"description": "Life"}
+            ]
+        },
+        {
+            "name": "Ela 30 IB",
+            "time left": 3600,
+            "details": []
+        }
+    ],
+    "Timer": {
+        "is Running?": true,
+        "Time Remaining": 8
+    },
+    "Completed Subjects": []
+}
