@@ -7,16 +7,17 @@ import java.util.ArrayList;
 //A timer class that increments in seconds, also incrementing a subject's remaining time by -1 every second
 public class Timer {
 
-    private boolean cancel;
     private long remainingTime;
     private final long startTime;
     private int prevSec;
+    private boolean isRunning;
 
     //modifies: this
     /* effects: constructs remaining time to inputted integer time and sets up
              necessary fields to their appropriate values */
     public Timer(int time) {
         this.remainingTime = time;
+        this.isRunning = false;
         startTime = System.currentTimeMillis();
         this.prevSec = 0;
     }
@@ -24,7 +25,8 @@ public class Timer {
     /*effects: loops until remaining time is <= 0, incrementing the remaining seconds by -1,
     it also increments subject remaining times when it runs*/
     public void start(ArrayList<Subject> s, ArrayList<Subject> cs) {
-        while (this.remainingTime >= 0) {
+        this.isRunning = true;
+        while (this.remainingTime >= 0 && isRunning) {
 
             long elapsedTime = System.currentTimeMillis() - startTime;
             long elapsedSeconds = elapsedTime / 1000;
@@ -36,18 +38,16 @@ public class Timer {
                 this.remainingTime--;
                 this.prevSec = (int) elapsedSeconds;
                 updateSubjects(s, cs);
-            }
 
-            if (cancel) {
-                break;
+                if (this.remainingTime <= 0) {
+                    System.out.println("Your Timer is Done!");
+                    //TODO: Delve into this rabbit hole
+                    this.isRunning = true;
+                    System.out.println("(bug: you have to input anything to reset the scanner)");
+                }
             }
         }
-        if (this.remainingTime <= 0) {
-            System.out.println("Your Timer is Done!");
-            //TODO: Delve into this rabbit hole
-            this.cancel = true;
-            System.out.println("(bug: you have to input anything to reset the scanner)");
-        }
+
     }
 
     //modifies: TimerApp.subjects and TimerApp.completedSubjects
@@ -70,12 +70,12 @@ public class Timer {
     //modifies: this
     //effects: stops the timer by breaking the loop initiated by start()
     public void stop() {
-        this.cancel = true;
+        this.isRunning = false;
     }
 
     //effects: returns true if the timer is currently running
     public boolean isRunning() {
-        return (getRemainingTime() <= 1);
+        return this.isRunning;
     }
 
     //modifies: this

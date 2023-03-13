@@ -45,7 +45,7 @@ public class JsonWriter {
     public void add(Timer t) {
         JSONObject json = new JSONObject();
         json.put("Time Remaining", t.getRemainingTime());
-        json.put("is Running?", !t.isRunning());
+        json.put("is Running?", t.isRunning());
         output.put("Timer",json);
     }
 

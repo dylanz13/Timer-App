@@ -31,6 +31,9 @@ public class TimerTests {
     public void testStop() {
         t.stop();
         assertFalse(t.isRunning());
+        t.start(new ArrayList<>(), new ArrayList<>());
+        t.stop();
+        assertFalse(t.isRunning());
     }
 
     @Test
@@ -60,6 +63,7 @@ public class TimerTests {
             assertEquals(rcs.get(i).getSecondsRemaining(), c.getSecondsRemaining());
             i++;
         }
+        assertFalse(t.isRunning());
     }
 
     @Test
@@ -87,6 +91,6 @@ public class TimerTests {
             assertEquals(rcs.get(i).getSecondsRemaining(), c.getSecondsRemaining());
             i++;
         }
-
+        assertFalse(t.isRunning());
     }
 }

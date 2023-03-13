@@ -43,8 +43,12 @@ public class JsonReader {
     // EFFECTS: parses workroom from JSON object and returns it
     private HashMap<String, Object> parseSubjects(JSONObject jsonObject) {
         HashMap<String, Object> tempList = new HashMap<>();
-        tempList.put("incSub", toSubjectArray(jsonObject.getJSONArray("Subjects of Focus")));
-        tempList.put("comSub", toSubjectArray(jsonObject.getJSONArray("Completed Subjects")));
+        try {
+            tempList.put("incSub", toSubjectArray(jsonObject.getJSONArray("Subjects of Focus")));
+            tempList.put("comSub", toSubjectArray(jsonObject.getJSONArray("Completed Subjects")));
+        } catch (Exception e) {
+            System.out.println("Nothing in JSON file!");
+        }
         try {
             JSONObject tempTimer = jsonObject.getJSONObject("Timer");
             tempList.put("secs", tempTimer.getInt("Time Remaining"));

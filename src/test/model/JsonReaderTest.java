@@ -23,12 +23,28 @@ public class JsonReaderTest {
     }
 
     @Test
+    void testReaderCompletelyEmpty() {
+        JsonReader reader = new JsonReader("./data/testReaderEmpty.json");
+        try {
+            HashMap<String, Object> objects = reader.read();
+            assertNull(objects.get("incSub"));
+            assertNull(objects.get("comSub"));
+            assertNull(objects.get("secs"));
+            assertNull(objects.get("run?"));
+        } catch (IOException e) {
+            fail("Couldn't read from file");
+        }
+    }
+
+    @Test
     void testReaderEmptyEverything() {
         JsonReader reader = new JsonReader("./data/testReaderEmptyEverything.json");
         try {
             HashMap<String, Object> objects = reader.read();
             assertTrue(((ArrayList<Subject>) objects.get("incSub")).isEmpty());
             assertTrue(((ArrayList<Subject>) objects.get("comSub")).isEmpty());
+            assertNull(objects.get("secs"));
+            assertNull(objects.get("run?"));
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

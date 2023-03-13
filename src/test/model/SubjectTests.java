@@ -89,5 +89,32 @@ public class SubjectTests {
         assertEquals(0, jsonArray.length());
     }
 
+    @Test
+    void testToJsonWithDetails() {
+        s.addDetails(new Detail("Finish Group Project"));
+        s.addDetails(new Detail("Before Friday, March 3rd"));
+        s.addDetails(new Detail("Be sure to set up a day for every group member to meet up"));
+
+        JSONObject jsonObject = s.toJson();
+        assertEquals("Math", jsonObject.getString("name"));
+        assertEquals(120, jsonObject.getInt("time left"));
+        JSONArray jsonArray = jsonObject.getJSONArray("details");
+        ArrayList<Detail> details = toDetails(jsonArray);
+        assertEquals(3, jsonArray.length());
+        assertEquals("Finish Group Project", details.get(0).getDescription());
+        assertEquals("Be sure to set up a day for every group member to meet up",
+                details.get(2).getDescription());
+    }
+
+    private ArrayList<Detail> toDetails(JSONArray jsonArray) {
+        ArrayList<Detail> tempDetailsArray = new ArrayList<>();
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                tempDetailsArray.add(new Detail(jsonArray.getJSONObject(i).getString("description")));
+            }
+        }
+        return tempDetailsArray;
+    }
+
     //TODO: add a toString() method test once implementation is finished
 }

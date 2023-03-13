@@ -27,7 +27,7 @@ public class JsonWriterTest {
     }
 
     @Test
-    void testWriterEmptyWorkroom() {
+    void testWriterEmptyEverything() {
         try {
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyEverything.json");
             writer.open();
@@ -41,6 +41,44 @@ public class JsonWriterTest {
                 HashMap<String, Object> objects = reader.read();
                 assertTrue(((ArrayList<Subject>) objects.get("incSub")).isEmpty());
                 assertTrue(((ArrayList<Subject>) objects.get("comSub")).isEmpty());
+            } catch (IOException e) {
+                fail("Exception should not have been thrown");
+            }
+        } catch (FileNotFoundException e) {
+            fail("Exception should not have been thrown");
+        }
+    }
+
+    @Test
+    void testWriterGeneralEverything() {
+        try {
+            JsonWriter writer = new JsonWriter("./data/testWriterEmptyEverything.json");
+            writer.open();
+            ArrayList<Detail> d = new ArrayList<>();
+            d.add(new Detail("Is"));
+            d.add(new Detail("Life"));
+            ArrayList<Subject> s = new ArrayList<>();
+            s.add(new Subject("Math 100", d, 113));
+            s.add(new Subject("Ela 30 IB", 3600));
+
+            writer.add(s, "inc");
+            writer.add(new ArrayList<>(), "com");
+            writer.add(new Timer(20));
+            writer.write();
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/testWriterEmptyEverything.json");
+            try {
+                HashMap<String, Object> objects = reader.read();
+                assertEquals("Math 100", ((ArrayList<Subject>) objects.get("incSub")).get(0).getDescription());
+                assertEquals(113, ((ArrayList<Subject>) objects.get("incSub")).get(0).getSecondsRemaining());
+                assertEquals("Is",
+                        ((ArrayList<Subject>) objects.get("incSub")).get(0).getDetails().get(0).getDescription());
+                assertEquals("Life",
+                        ((ArrayList<Subject>) objects.get("incSub")).get(0).getDetails().get(1).getDescription());
+
+                assertEquals(20, objects.get("secs"));
+                assertFalse((Boolean) objects.get("run?"));
             } catch (IOException e) {
                 fail("Exception should not have been thrown");
             }
