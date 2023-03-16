@@ -39,10 +39,10 @@ public class Timer {
                 this.prevSec = (int) elapsedSeconds;
                 updateSubjects(s, cs);
 
-                if (this.remainingTime <= 0) {
+                if (this.remainingTime < 0) {
                     System.out.println("Your Timer is Done!");
                     //TODO: Delve into this rabbit hole
-                    this.isRunning = true;
+                    this.isRunning = false;
                     System.out.println("(bug: you have to input anything to reset the scanner)");
                 }
             }
@@ -53,7 +53,7 @@ public class Timer {
     //modifies: TimerApp.subjects and TimerApp.completedSubjects
     //effects: removes subject from subjects if their remaining time is <= 0, adding it to completedSubjects
     private void updateSubjects(ArrayList<Subject> s, ArrayList<Subject> cs) {
-        if (s.size() >= 1 && remainingTime != 0) {
+        if (s.size() >= 1 && this.remainingTime >= 0) {
             s.get(0).countDown();
             if (s.get(0).getSecondsRemaining() <= 0) {
                 cs.add(s.get(0));

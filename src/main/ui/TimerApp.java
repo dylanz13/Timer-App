@@ -158,7 +158,7 @@ public class TimerApp {
             Runnable r = () -> {
                 TimerApp.timer = new Timer(time);
                 System.out.println("Time Starts Now!");
-                timer.start(subjectManager.getIncSubjects(), subjectManager.getIncSubjects());
+                timer.start(subjectManager.getIncSubjects(), subjectManager.getComSubjects());
                 isRunning = false;
             };
             new Thread(r).start();
@@ -173,7 +173,7 @@ public class TimerApp {
         Runnable r = () -> {
             TimerApp.timer = new Timer(time);
             System.out.println("Time Resumes Now!");
-            timer.start(subjectManager.getIncSubjects(), subjectManager.getIncSubjects());
+            timer.start(subjectManager.getIncSubjects(), subjectManager.getComSubjects());
             isRunning = false;
         };
         new Thread(r).start();

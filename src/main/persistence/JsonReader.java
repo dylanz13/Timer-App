@@ -59,6 +59,7 @@ public class JsonReader {
         return tempList;
     }
 
+    // EFFECTS: helper function that parses JSONArray to Subject Array
     private ArrayList<Subject> toSubjectArray(JSONArray jsonArray) {
         ArrayList<Subject> tempSubjectArray = new ArrayList<>();
         if (jsonArray != null) {
@@ -71,6 +72,7 @@ public class JsonReader {
         return tempSubjectArray;
     }
 
+    // EFFECTS: helper function that parses JSONArray to Detail Array
     private ArrayList<Detail> toDetails(JSONArray jsonArray) {
         ArrayList<Detail> tempDetailsArray = new ArrayList<>();
         if (jsonArray != null) {

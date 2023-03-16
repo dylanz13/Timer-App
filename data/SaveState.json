@@ -1,4 +1,8 @@
 {
     "Subjects of Focus": [],
-    "Completed Subjects": []
+    "Completed Subjects": [{
+        "name": "math",
+        "time left": 0,
+        "details": []
+    }]
 }

@@ -29,7 +29,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of TimerApp subjects to output
     public void add(ArrayList<Subject> subjects, String comparator) {
         JSONArray json = new JSONArray();
         for (Subject s : subjects) {
@@ -42,6 +42,8 @@ public class JsonWriter {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: writes JSON representation of Timer to output
     public void add(Timer t) {
         JSONObject json = new JSONObject();
         json.put("Time Remaining", t.getRemainingTime());
@@ -49,6 +51,7 @@ public class JsonWriter {
         output.put("Timer",json);
     }
 
+    // EFFECTS: saves output to file
     public void write() {
         saveToFile(output.toString(TAB));
     }
