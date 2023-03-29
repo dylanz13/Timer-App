@@ -14,6 +14,7 @@ public class Subject implements Writable {
     private String description;
     private ArrayList<Detail> details;
     private int secondsRemaining;
+    private int secondsDone;
 
     //modifies: this
     //effects: constructs a subject
@@ -21,14 +22,16 @@ public class Subject implements Writable {
         this.description = description;
         this.details = new ArrayList<>();
         this.secondsRemaining = Math.max(secondsRemaining, 0);
+        this.secondsDone = 0;
     }
 
     //modifies: this
     //effects: constructs a subject
-    public Subject(String description, ArrayList<Detail> details, int secondsRemaining) {
+    public Subject(String description, ArrayList<Detail> details, int secondsRemaining, int secsElapsed) {
         this.description = description;
         this.details = details;
         this.secondsRemaining = Math.max(secondsRemaining, 0);
+        this.secondsDone = secsElapsed;
     }
 
     //modifies: this
@@ -45,6 +48,11 @@ public class Subject implements Writable {
     //effects: returns the list of details within the subject
     public ArrayList<Detail> getDetails() {
         return details;
+    }
+
+    //effects: returns the seconds already worked on a subject of focus
+    public int getSecondsDone() {
+        return this.secondsDone;
     }
 
     //modifies: this
@@ -77,6 +85,7 @@ public class Subject implements Writable {
     //effects: increments seconds remaining by -1
     public void countDown() {
         this.secondsRemaining--;
+        this.secondsDone++;
     }
 
     @Override
@@ -85,6 +94,7 @@ public class Subject implements Writable {
         json.put("name", description);
         json.put("details", detailsToJson());
         json.put("time left", secondsRemaining);
+        json.put("time elapsed", secondsDone);
         return json;
     }
 

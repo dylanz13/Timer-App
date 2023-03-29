@@ -1,16 +1,20 @@
 package model;
 
+import ui.Draw;
+import ui.SubjectManager;
 import ui.TimerApp;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 //A timer class that increments in seconds, also incrementing a subject's remaining time by -1 every second
 public class Timer {
 
     private long remainingTime;
-    private final long startTime;
+    private long startTime;
     private int prevSec;
     private boolean isRunning;
+    private boolean isPaused;
 
     //modifies: this
     /* effects: constructs remaining time to inputted integer time and sets up
@@ -18,36 +22,57 @@ public class Timer {
     public Timer(int time) {
         this.remainingTime = time;
         this.isRunning = false;
+        this.isPaused = false;
         startTime = System.currentTimeMillis();
         this.prevSec = 0;
     }
 
     /*effects: loops until remaining time is <= 0, incrementing the remaining seconds by -1,
     it also increments subject remaining times when it runs*/
-    public void start(ArrayList<Subject> s, ArrayList<Subject> cs) {
+    public void start(SubjectManager sm, Draw shape) throws Exception {
         this.isRunning = true;
         while (this.remainingTime >= 0 && isRunning) {
+            pauseLoop();
 
             long elapsedTime = System.currentTimeMillis() - startTime;
             long elapsedSeconds = elapsedTime / 1000;
 
             if (prevSec != elapsedSeconds) {
-                System.out.print(TimerApp.formatSeconds(this.remainingTime));
-
-                System.out.println();
                 this.remainingTime--;
+                shape.getTimeTextField().setText(TimerApp.formatSeconds(this.remainingTime));
+                shape.updateProgress();
+                shape.update();
                 this.prevSec = (int) elapsedSeconds;
-                updateSubjects(s, cs);
+                updateSubjects(sm.getIncSubjects(), sm.getComSubjects());
 
                 if (this.remainingTime < 0) {
-                    System.out.println("Your Timer is Done!");
-                    //TODO: Delve into this rabbit hole
                     this.isRunning = false;
-                    System.out.println("(bug: you have to input anything to reset the scanner)");
                 }
             }
         }
+    }
 
+    //Effects: sleeps the current thread for as long as the user pauses the program for
+    private void pauseLoop() {
+
+        while (this.isPaused) {
+            try {
+                long pauseTracker = System.currentTimeMillis();
+                Thread.sleep(100);
+                startTime = startTime + (System.currentTimeMillis() - pauseTracker);
+                if (!this.isRunning) {
+                    break;
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //modifies: this
+    //effects: changes paused variable
+    public void setPaused(Boolean isPaused) {
+        this.isPaused = isPaused;
     }
 
     //modifies: TimerApp.subjects and TimerApp.completedSubjects
@@ -55,6 +80,7 @@ public class Timer {
     private void updateSubjects(ArrayList<Subject> s, ArrayList<Subject> cs) {
         if (s.size() >= 1 && this.remainingTime >= 0) {
             s.get(0).countDown();
+            TimerApp.updateSubjectsUI(s, cs);
             if (s.get(0).getSecondsRemaining() <= 0) {
                 cs.add(s.get(0));
                 s.remove(0);
@@ -72,6 +98,7 @@ public class Timer {
     public void stop() {
         this.isRunning = false;
     }
+
 
     //effects: returns true if the timer is currently running
     public boolean isRunning() {

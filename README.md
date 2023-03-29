@@ -31,3 +31,11 @@ assigned any given subject of focus, printing out an alert when this happens.<br
 As a user, I want to be able to save my subject list and current timer state to file (if I so choose) <br>
 As a user, I want to be able to be able to load my subject list and current timer state from file (if I so choose) <br>
 </ul>
+
+# Instructions for Grader
+
+- You can generate the first required action related to adding Xs to a Y by clicking the "Modify" button and adding the required 'description' and 'time' remaining (beware that the time entered must be formatted in 'HH:MM:SS)
+- You can generate the second required action related to adding Xs to a Y by clicking the "Modify" button and changing the edit fields
+- You can locate my visual component by entering a time in the main application, right next to "Enter a Time: ", where a timer alongside a visual representation of said timer will start.
+- You can save the state of my application by clicking the "Save to File" button
+- You can reload the state of my application by click the "Load to File" button

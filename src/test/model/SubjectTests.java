@@ -27,7 +27,7 @@ public class SubjectTests {
 
     @Test
     void testSecondConstructor() {
-        s = new Subject("Math", new ArrayList<>(), 120);
+        s = new Subject("Math", new ArrayList<>(), 120, 0);
         assertEquals("Math", s.getDescription());
         assertEquals(120, s.getSecondsRemaining());
         assertEquals(0,s.getDetails().size());

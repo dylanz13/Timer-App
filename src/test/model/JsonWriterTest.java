@@ -58,7 +58,7 @@ public class JsonWriterTest {
             d.add(new Detail("Is"));
             d.add(new Detail("Life"));
             ArrayList<Subject> s = new ArrayList<>();
-            s.add(new Subject("Math 100", d, 113));
+            s.add(new Subject("Math 100", d, 113, 0));
             s.add(new Subject("Ela 30 IB", 3600));
 
             writer.add(s, "inc");

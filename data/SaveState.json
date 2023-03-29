@@ -1,8 +1,22 @@
 {
-    "Subjects of Focus": [],
+    "Subjects of Focus": [
+        {
+            "name": "Phys",
+            "time left": 790,
+            "details": [],
+            "time elapsed": 20
+        },
+        {
+            "name": "Engl",
+            "time left": 91,
+            "details": [],
+            "time elapsed": 0
+        }
+    ],
     "Completed Subjects": [{
-        "name": "math",
+        "name": "Math",
         "time left": 0,
-        "details": []
+        "details": [],
+        "time elapsed": 100
     }]
 }

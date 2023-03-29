@@ -66,7 +66,8 @@ public class JsonReader {
             for (int i = 0; i < jsonArray.length(); i++) {
                 tempSubjectArray.add(new Subject(jsonArray.getJSONObject(i).getString("name"),
                         toDetails(jsonArray.getJSONObject(i).getJSONArray("details")),
-                        jsonArray.getJSONObject(i).getInt("time left")));
+                        jsonArray.getJSONObject(i).getInt("time left"),
+                        jsonArray.getJSONObject(i).getInt("time elapsed")));
             }
         }
         return tempSubjectArray;
