@@ -26,7 +26,6 @@ public class TimerApp extends JFrame {
     private Draw shape;
     private JTextField time;
     private JPanel pane;
-    private JToggleButton playPause;
     private static DefaultTableModel incSubModel;
     private static DefaultTableModel comSubModel;
 
@@ -51,7 +50,7 @@ public class TimerApp extends JFrame {
 
         //Adding all the UI Elements
         addShape(c, p);
-        addPlayPause(playPause);
+        addPlayPause();
         addTimeUI(c, p);
         addSaveLoad(c, p);
         addSubjectsUI(c, p);
@@ -75,16 +74,15 @@ public class TimerApp extends JFrame {
         shape.update();
     }
 
-    private void addPlayPause(JToggleButton playPause) {
-        playPause = new JToggleButton("Pause");
+    private void addPlayPause() {
+        JToggleButton playPause = new JToggleButton("Pause");
         addItemListener(playPause);
 
         JButton cancel = new JButton("Cancel");
-        JToggleButton finalPlayPause1 = playPause;
         cancel.addActionListener(e -> {
             if (timer != null) {
                 timer.stop();
-                finalPlayPause1.setSelected(false);
+                playPause.setSelected(false);
             }
         });
 
@@ -339,7 +337,8 @@ public class TimerApp extends JFrame {
             throw new Exception();
         }
 
-        int i = 0;
+
+        int i;
         if (split.length == 3) {
             i = 3600 * Integer.parseInt(split[0])
                     + 60 * Integer.parseInt(split[1])
@@ -349,6 +348,10 @@ public class TimerApp extends JFrame {
         } else {
             i = Integer.parseInt(split[0]);
         }
+        if (i < 0) {
+            throw new Exception();
+        }
+
         return i;
     }
 
@@ -459,6 +462,10 @@ public class TimerApp extends JFrame {
 
     //effects: Helper function that updates relevant subject UI elements
     public static void updateSubjectsUI(ArrayList<Subject> s, ArrayList<Subject> cs) {
+        if (incSubModel == null) {
+            String[] incSubjectsColumns = {"description", "time remaining"};
+            incSubModel = new DefaultTableModel(incSubjectsColumns, 1);
+        }
         if (incSubModel.getValueAt(0, 1) != null) {
             if (s.get(0).getSecondsRemaining() > 0) {
                 incSubModel.setValueAt(formatSeconds(s.get(0).getSecondsRemaining()), 0, 1);

@@ -19,7 +19,9 @@ public class SubjectManager {
     }
 
     public void addSubject(Subject subject) {
-        subjects.add(subject);
+        if (!subjects.contains(subject)) {
+            subjects.add(subject);
+        }
     }
 
     public void removeSubject(String s) {
@@ -38,9 +40,7 @@ public class SubjectManager {
     }
 
     public boolean hasSubject(String s) {
-        ArrayList<String> descriptions = new ArrayList<>();
-        subjects.forEach(subject -> descriptions.add(subject.getDescription()));
-        return (descriptions.contains(s));
+        return subjects.contains(new Subject(s, 100));
     }
 
     public ArrayList<Subject> getIncSubjects() {

@@ -2,6 +2,7 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ui.Draw;
 import ui.SubjectManager;
 
 import java.util.ArrayList;
@@ -10,16 +11,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 //A test class that makes sure Timer is implemented correctly //TODO: FIX TESTS
 public class TimerTests {
-    Timer t;
+    private Timer t;
+    private Draw shape;
+    private SubjectManager sm;
 
     @BeforeEach
     public void setUp() {
         t = new Timer(20);
+        shape = new Draw("00:00");
+        sm = new SubjectManager();
     }
 
     @Test
     public void testConstructor() {
         assertEquals(20, t.getRemainingTime());
+        assertFalse(t.isRunning());
+        assertFalse(t.isPaused());
     }
 
     @Test
@@ -29,39 +36,42 @@ public class TimerTests {
     }
 
     @Test
+    public void setPaused() {
+        t.setPaused(true);
+        assertTrue(t.isPaused());
+    }
+
+    @Test
     public void testStop() {
         t.stop();
         assertFalse(t.isRunning());
-        //t.start(new SubjectManager());
+        t.start(sm, shape);
         t.stop();
         assertFalse(t.isRunning());
     }
 
     @Test
     public void testStartNoSubjects() {
-        //t.start(new ArrayList<>(), new ArrayList<>());
+        t.start(sm, shape);
         assertFalse(t.isRunning());
     }
 
     @Test
     public void testStartCompleteSubjects() {
-        ArrayList<Subject> s = new ArrayList<>();
-        ArrayList<Subject> cs = new ArrayList<>();
 
-        s.add(new Subject("Math", 10));
-        s.add(new Subject("CPSC", 10));
+        sm.addSubject(new Subject("Math", 10));
+        sm.addSubject(new Subject("CPSC", 10));
 
-        //t.start(s, cs);
+        t.start(sm, shape);
 
         ArrayList<Subject> rcs = new ArrayList<>();
 
         rcs.add(new Subject("Math", 0));
         rcs.add(new Subject("CPSC", 0));
-        assertTrue(s.isEmpty());
+        assertTrue(sm.getIncSubjects().isEmpty());
         int i = 0;
-        for (Subject c : cs) {
-            assertEquals(rcs.get(i).getDescription(), c.getDescription());
-            assertEquals(rcs.get(i).getSecondsRemaining(), c.getSecondsRemaining());
+        for (Subject c : sm.getComSubjects()) {
+            assertEquals(rcs.get(i), c);
             i++;
         }
         assertFalse(t.isRunning());
@@ -69,14 +79,12 @@ public class TimerTests {
 
     @Test
     public void testStartIncompleteSubjects() {
-        ArrayList<Subject> s = new ArrayList<>();
-        ArrayList<Subject> cs = new ArrayList<>();
 
-        s.add(new Subject("Math", 10));
-        s.add(new Subject("English", 2));
-        s.add(new Subject("CPSC", 10));
+        sm.addSubject(new Subject("Math", 10));
+        sm.addSubject(new Subject("English", 2));
+        sm.addSubject(new Subject("CPSC", 10));
 
-        //t.start(s, cs);
+        t.start(sm, shape);
 
         ArrayList<Subject> rs = new ArrayList<>();
         ArrayList<Subject> rcs = new ArrayList<>();
@@ -84,12 +92,10 @@ public class TimerTests {
         rs.add(new Subject("CPSC", 2));
         rcs.add(new Subject("Math", 0));
         rcs.add(new Subject("English", 0));
-        assertEquals(rs.get(0).getDescription(), s.get(0).getDescription());
-        assertEquals(rs.get(0).getSecondsRemaining(), s.get(0).getSecondsRemaining());
+        assertEquals(rs.get(0), sm.getIncSubjects().get(0));
         int i = 0;
-        for (Subject c : cs) {
-            assertEquals(rcs.get(i).getDescription(), c.getDescription());
-            assertEquals(rcs.get(i).getSecondsRemaining(), c.getSecondsRemaining());
+        for (Subject c : sm.getComSubjects()) {
+            assertEquals(rcs.get(i), c);
             i++;
         }
         assertFalse(t.isRunning());

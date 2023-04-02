@@ -29,7 +29,7 @@ public class Timer {
 
     /*effects: loops until remaining time is <= 0, incrementing the remaining seconds by -1,
     it also increments subject remaining times when it runs*/
-    public void start(SubjectManager sm, Draw shape) throws Exception {
+    public void start(SubjectManager sm, Draw shape) {
         this.isRunning = true;
         while (this.remainingTime >= 0 && isRunning) {
             pauseLoop();
@@ -103,6 +103,11 @@ public class Timer {
     //effects: returns true if the timer is currently running
     public boolean isRunning() {
         return this.isRunning;
+    }
+
+    //effects: returns true if the timer is currently paused
+    public boolean isPaused() {
+        return this.isPaused;
     }
 
     //modifies: this

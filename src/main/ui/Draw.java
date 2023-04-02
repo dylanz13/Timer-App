@@ -41,11 +41,17 @@ public class Draw extends JPanel {
         totTime = i;
     }
 
-    public void updateProgress() throws Exception {
+    public void updateProgress() {
+        double endAngle = 0;
+        try {
+            endAngle = (double) TimerApp.getTimeFromString(time.getText().split(":", 3)) / totTime;
+        } catch (Exception e) {
+            //
+        }
         Arc2D arc1 = new Arc2D.Double(20, 20,160,160,0,
-                ((double) TimerApp.getTimeFromString(time.getText().split(":",3)) / totTime) * -360, Arc2D.PIE);
+                endAngle * -360, Arc2D.PIE);
         Arc2D arc2 = new Arc2D.Double(40, 40, 120, 120, 0,
-                ((double) TimerApp.getTimeFromString(time.getText().split(":",3)) / totTime) * -360, Arc2D.PIE);
+                endAngle * -360, Arc2D.PIE);
         Area area = new Area(arc1);
         area.subtract(new Area(arc2));
         progress = area;

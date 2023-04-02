@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ui.SubjectManager;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,18 @@ public class SubjectTests {
         assertEquals("Math", s.getDescription());
         assertEquals(120, s.getSecondsRemaining());
         assertTrue(s.getDetails().isEmpty());
+    }
+
+    @Test
+    void testEquals() {
+        Subject s1 = new Subject("Math", 120);
+        SubjectManager sm = new SubjectManager();
+        sm.addSubject(s1);
+        sm.addSubject(s);
+        assertEquals(s1, s);
+        assertEquals(s1, sm.getIncSubjects().get(0));
+        assertEquals(1, sm.getIncSubjects().size());
+
     }
 
     @Test

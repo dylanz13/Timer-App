@@ -3,9 +3,9 @@ package model;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
-import ui.TimerApp;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /*
 A class that contains details pertaining to a specific subject of focus, including a descriptor, details,
@@ -107,5 +107,18 @@ public class Subject implements Writable {
         }
 
         return jsonArray;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Subject subject = (Subject) o;
+        return Objects.equals(description, subject.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(description, details, secondsRemaining, secondsDone);
     }
 }
