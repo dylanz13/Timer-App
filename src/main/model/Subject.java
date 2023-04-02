@@ -111,8 +111,12 @@ public class Subject implements Writable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Subject subject = (Subject) o;
         return Objects.equals(description, subject.description);
     }
