@@ -12,7 +12,6 @@ A class that contains details pertaining to a specific subject of focus, includi
  and time allotted */
 public class Subject implements Writable {
     private String description;
-    private ArrayList<Detail> details;
     private int secondsRemaining;
     private int secondsDone;
 
@@ -20,16 +19,14 @@ public class Subject implements Writable {
     //effects: constructs a subject
     public Subject(String description, int secondsRemaining) {
         this.description = description;
-        this.details = new ArrayList<>();
         this.secondsRemaining = Math.max(secondsRemaining, 0);
         this.secondsDone = 0;
     }
 
     //modifies: this
     //effects: constructs a subject
-    public Subject(String description, ArrayList<Detail> details, int secondsRemaining, int secsElapsed) {
+    public Subject(String description, int secondsRemaining, int secsElapsed) {
         this.description = description;
-        this.details = details;
         this.secondsRemaining = Math.max(secondsRemaining, 0);
         this.secondsDone = secsElapsed;
     }
@@ -45,21 +42,9 @@ public class Subject implements Writable {
         return description;
     }
 
-    //effects: returns the list of details within the subject
-    public ArrayList<Detail> getDetails() {
-        return details;
-    }
-
     //effects: returns the seconds already worked on a subject of focus
     public int getSecondsDone() {
         return this.secondsDone;
-    }
-
-    //modifies: this
-    //effects: adds a detail to the details arrayList
-    public void addDetails(Detail d) {
-        this.details.add(d);
-//        this.secondsRemaining += d.getSecondsRemaining();
     }
 
     //effects: returns the seconds in the subject remaining
@@ -92,37 +77,21 @@ public class Subject implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", description);
-        json.put("details", detailsToJson());
         json.put("time left", secondsRemaining);
         json.put("time elapsed", secondsDone);
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
-    private JSONArray detailsToJson() {
-        JSONArray jsonArray = new JSONArray();
-
-        for (Detail d : details) {
-            jsonArray.put(d.toJson());
-        }
-
-        return jsonArray;
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof Subject)) return false;
         Subject subject = (Subject) o;
         return Objects.equals(description, subject.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(description, details, secondsRemaining, secondsDone);
+        return Objects.hash(description, secondsRemaining, secondsDone);
     }
 }

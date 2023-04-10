@@ -1,17 +1,18 @@
 package ui;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
-import java.awt.image.BufferedImage;
 
+/*
+  Draws the image of the timer counting down of the timer app.
+ */
 public class Draw extends JPanel {
     private JTextField time;
     private int totTime;
-    Shape progress;
+    private Shape progress;
 
     public Draw(String str) {
 
@@ -46,7 +47,7 @@ public class Draw extends JPanel {
         try {
             endAngle = (double) TimerApp.getTimeFromString(time.getText().split(":", 3)) / totTime;
         } catch (Exception e) {
-            //
+            //Oh, well!
         }
         Arc2D arc1 = new Arc2D.Double(20, 20,160,160,0,
                 endAngle * -360, Arc2D.PIE);
@@ -69,7 +70,7 @@ public class Draw extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
-        Shape ring = createRingShape(100, 100, 80, 20);
+        Shape ring = createRingShape();
 
         if (progress != null) {
             g2D.setColor(new Color(255, 127, 80));
@@ -84,7 +85,7 @@ public class Draw extends JPanel {
                 g2D.drawLine(100,100, 100 + (int) (79 * Math.cos(getRadians())),
                         100 + (int) (79 * Math.sin(getRadians())));
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                // Oh, well!
             }
         } else {
             g2D.setColor(new Color(56,52,44));
@@ -98,17 +99,17 @@ public class Draw extends JPanel {
                 * 360 - 1);
     }
 
-    private static Shape createRingShape(double centerX, double centerY, double outerRadius, double thickness) {
+    private static Shape createRingShape() {
         Ellipse2D outer = new Ellipse2D.Double(
-                centerX - outerRadius,
-                centerY - outerRadius,
-                outerRadius + outerRadius,
-                outerRadius + outerRadius);
+                100 - 80,
+                100 - 80,
+                80 + 80,
+                80 + 80);
         Ellipse2D inner = new Ellipse2D.Double(
-                centerX - outerRadius + thickness,
-                centerY - outerRadius + thickness,
-                outerRadius + outerRadius - thickness - thickness,
-                outerRadius + outerRadius - thickness - thickness);
+                100 - 80 + 20,
+                100 - 80 + 20,
+                80 + 80 - 20 - 20,
+                80 + 80 - 20 - 20);
         Area area = new Area(outer);
         area.subtract(new Area(inner));
         return area;

@@ -1,5 +1,7 @@
-package model;
+package persistence;
 
+import model.Subject;
+import model.Timer;
 import org.junit.jupiter.api.Test;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -54,11 +56,8 @@ public class JsonWriterTest {
         try {
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyEverything.json");
             writer.open();
-            ArrayList<Detail> d = new ArrayList<>();
-            d.add(new Detail("Is"));
-            d.add(new Detail("Life"));
             ArrayList<Subject> s = new ArrayList<>();
-            s.add(new Subject("Math 100", d, 113, 0));
+            s.add(new Subject("Math 100", 113, 0));
             s.add(new Subject("Ela 30 IB", 3600));
 
             writer.add(s, "inc");
@@ -72,10 +71,6 @@ public class JsonWriterTest {
                 HashMap<String, Object> objects = reader.read();
                 assertEquals("Math 100", ((ArrayList<Subject>) objects.get("incSub")).get(0).getDescription());
                 assertEquals(113, ((ArrayList<Subject>) objects.get("incSub")).get(0).getSecondsRemaining());
-                assertEquals("Is",
-                        ((ArrayList<Subject>) objects.get("incSub")).get(0).getDetails().get(0).getDescription());
-                assertEquals("Life",
-                        ((ArrayList<Subject>) objects.get("incSub")).get(0).getDetails().get(1).getDescription());
 
                 assertEquals(20, objects.get("secs"));
                 assertFalse((Boolean) objects.get("run?"));

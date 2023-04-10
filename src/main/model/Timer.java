@@ -1,10 +1,8 @@
 package model;
 
 import ui.Draw;
-import ui.SubjectManager;
 import ui.TimerApp;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 //A timer class that increments in seconds, also incrementing a subject's remaining time by -1 every second
@@ -17,8 +15,10 @@ public class Timer {
     private boolean isPaused;
 
     //modifies: this
-    /* effects: constructs remaining time to inputted integer time and sets up
-             necessary fields to their appropriate values */
+    /*
+    effects: constructs remaining time to inputted integer time and sets up
+             necessary fields to their appropriate values
+             */
     public Timer(int time) {
         this.remainingTime = time;
         this.isRunning = false;
@@ -27,10 +27,13 @@ public class Timer {
         this.prevSec = 0;
     }
 
-    /*effects: loops until remaining time is <= 0, incrementing the remaining seconds by -1,
-    it also increments subject remaining times when it runs*/
+    /*
+    effects: loops until remaining time is <= 0, incrementing the remaining seconds by -1,
+    it also increments subject remaining times when it runs
+    */
     public void start(SubjectManager sm, Draw shape) {
         this.isRunning = true;
+        EventLog.getInstance().logEvent(new Event("Started Timer for: " + TimerApp.formatSeconds(remainingTime)));
         while (this.remainingTime >= 0 && isRunning) {
             pauseLoop();
 
@@ -47,6 +50,8 @@ public class Timer {
 
                 if (this.remainingTime < 0) {
                     this.isRunning = false;
+                } else if (this.remainingTime == 1) {
+                    EventLog.getInstance().logEvent(new Event("Finished Timer."));
                 }
             }
         }
@@ -54,13 +59,13 @@ public class Timer {
 
     //Effects: sleeps the current thread for as long as the user pauses the program for
     private void pauseLoop() {
-
         while (this.isPaused) {
             try {
                 long pauseTracker = System.currentTimeMillis();
                 Thread.sleep(100);
                 startTime = startTime + (System.currentTimeMillis() - pauseTracker);
                 if (!this.isRunning) {
+                    EventLog.getInstance().logEvent(new Event("Cancelled Timer."));
                     break;
                 }
             } catch (InterruptedException e) {
@@ -72,6 +77,11 @@ public class Timer {
     //modifies: this
     //effects: changes paused variable
     public void setPaused(Boolean isPaused) {
+        if (isPaused) {
+            EventLog.getInstance().logEvent(new Event("Paused Timer."));
+        } else {
+            EventLog.getInstance().logEvent(new Event("Resumed Timer."));
+        }
         this.isPaused = isPaused;
     }
 
@@ -80,7 +90,7 @@ public class Timer {
     private void updateSubjects(ArrayList<Subject> s, ArrayList<Subject> cs) {
         if (s.size() >= 1 && this.remainingTime >= 0) {
             s.get(0).countDown();
-            TimerApp.updateSubjectsUI(s, cs);
+            TimerApp.updateSubjectsUI(s);
             if (s.get(0).getSecondsRemaining() <= 0) {
                 cs.add(s.get(0));
                 s.remove(0);
@@ -96,6 +106,7 @@ public class Timer {
     //modifies: this
     //effects: stops the timer by breaking the loop initiated by start()
     public void stop() {
+        EventLog.getInstance().logEvent(new Event("Cancelled Timer."));
         this.isRunning = false;
     }
 
@@ -113,6 +124,8 @@ public class Timer {
     //modifies: this
     //effects: sets remaining time to a specified value
     public void setRemainingTime(long remainingTime) {
+        EventLog.getInstance().logEvent(new Event("Set Timer Remaining Time to: "
+                + TimerApp.formatSeconds(remainingTime)));
         this.remainingTime = remainingTime;
     }
 }

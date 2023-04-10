@@ -1,5 +1,7 @@
 package persistence;
 
+import model.Event;
+import model.EventLog;
 import model.Subject;
 import model.Timer;
 import org.json.JSONArray;
@@ -53,6 +55,7 @@ public class JsonWriter {
 
     // EFFECTS: saves output to file
     public void write() {
+        EventLog.getInstance().logEvent(new Event("Saved Current TimerApp State to File."));
         saveToFile(output.toString(TAB));
     }
 

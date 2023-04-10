@@ -1,5 +1,6 @@
-package model;
+package persistence;
 
+import model.Subject;
 import org.junit.jupiter.api.Test;
 import persistence.JsonReader;
 
@@ -57,10 +58,6 @@ public class JsonReaderTest {
             HashMap<String, Object> objects = reader.read();
             assertEquals("Math 100", ((ArrayList<Subject>) objects.get("incSub")).get(0).getDescription());
             assertEquals(113, ((ArrayList<Subject>) objects.get("incSub")).get(0).getSecondsRemaining());
-            assertEquals("Is",
-                    ((ArrayList<Subject>) objects.get("incSub")).get(0).getDetails().get(0).getDescription());
-            assertEquals("Life",
-                    ((ArrayList<Subject>) objects.get("incSub")).get(0).getDetails().get(1).getDescription());
 
 
             assertEquals(8, objects.get("secs"));

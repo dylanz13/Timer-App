@@ -1,6 +1,7 @@
 package persistence;
 
-import model.Detail;
+import model.Event;
+import model.EventLog;
 import model.Subject;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -56,6 +57,7 @@ public class JsonReader {
         } catch (Exception e) {
             //Oh, well.
         }
+        EventLog.getInstance().logEvent(new Event("Loaded Previous TimerApp State from File."));
         return tempList;
     }
 
@@ -65,22 +67,10 @@ public class JsonReader {
         if (jsonArray != null) {
             for (int i = 0; i < jsonArray.length(); i++) {
                 tempSubjectArray.add(new Subject(jsonArray.getJSONObject(i).getString("name"),
-                        toDetails(jsonArray.getJSONObject(i).getJSONArray("details")),
                         jsonArray.getJSONObject(i).getInt("time left"),
                         jsonArray.getJSONObject(i).getInt("time elapsed")));
             }
         }
         return tempSubjectArray;
-    }
-
-    // EFFECTS: helper function that parses JSONArray to Detail Array
-    private ArrayList<Detail> toDetails(JSONArray jsonArray) {
-        ArrayList<Detail> tempDetailsArray = new ArrayList<>();
-        if (jsonArray != null) {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                tempDetailsArray.add(new Detail(jsonArray.getJSONObject(i).getString("description")));
-            }
-        }
-        return tempDetailsArray;
     }
 }

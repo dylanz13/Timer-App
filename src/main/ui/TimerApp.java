@@ -1,5 +1,8 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
+import model.SubjectManager;
 import model.Timer;
 import model.Subject;
 import persistence.JsonReader;
@@ -17,12 +20,14 @@ import java.util.ArrayList;
 //Main UI interface for my application
 public class TimerApp extends JFrame {
 
+    //Backend field declarations
     private static final String JSON_STORE = "./data/SaveState.json";
     private SubjectManager subjectManager;
     private static Timer timer;
     private final JsonReader jsonReader;
     private final JsonWriter jsonWriter;
 
+    //UI field declarations
     private Draw shape;
     private JTextField time;
     private JPanel pane;
@@ -36,6 +41,7 @@ public class TimerApp extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(500, 600));
         setSize(500, 500);
+        addWindowListener();
 
         //Variable Initializations
         subjectManager = new SubjectManager();
@@ -58,6 +64,19 @@ public class TimerApp extends JFrame {
 
         getContentPane().add(p);
         setVisible(true);
+    }
+
+    //effects: prints out all EventLog events on JFrame being closed
+    public void addWindowListener() {
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                for (Event event : EventLog.getInstance()) {
+                    System.out.println(event + "\n\r");
+                }
+            }
+        });
     }
 
     private void setGridDetails(int x, int y, int width, int height, GridBagConstraints c) {
@@ -214,7 +233,7 @@ public class TimerApp extends JFrame {
         JTextField newTime = new JTextField("New Time");
         addEditSubject(editSubject, newDesc, newTime, myPanel, c);
 
-        JOptionPane.showMessageDialog(p, myPanel, "ScreenPreview", JOptionPane.PLAIN_MESSAGE, null);
+        JOptionPane.showMessageDialog(p, myPanel, "Modify Subjects", JOptionPane.PLAIN_MESSAGE, null);
         try {
             tryEditSubject(editSubject, newDesc, newTime);
         } catch (Exception e) {
@@ -284,27 +303,45 @@ public class TimerApp extends JFrame {
         myPanel.add((new JLabel("Edit a Subject:")), c);
     }
 
-    private void tryEditSubject(JTextField editSubject, JTextField newDesc, JTextField newTime) throws Exception {
+    private void tryEditSubject(JTextField editSubject, JTextField newDesc, JTextField newTime) {
         if (!editSubject.getText().equals("Subject Description") && !newDesc.getText().equals("New Description (OR)")) {
             if (subjectManager.getSubject(editSubject.getText()) != null) {
-                subjectManager.getSubject(editSubject.getText()).setDescription(newDesc.getText());
-                for (int i = 0; i < incSubModel.getRowCount(); i++) {
-                    if (incSubModel.getValueAt(i, 0).equals(editSubject.getText())) {
-                        incSubModel.setValueAt(newDesc.getText(), i, 0);
-                    }
-                }
+                changeSubjectDesc(subjectManager.getSubject(editSubject.getText()).getDescription(),
+                        newDesc.getText());
+
             }
         } else if (!newTime.getText().equals("New Time")) {
             if (subjectManager.getSubject(editSubject.getText()) != null) {
-                subjectManager.getSubject(editSubject.getText())
-                        .setSecondsRemaining(getTimeFromString(newTime.getText().split(":", 3)));
-                for (int i = 0; i < incSubModel.getRowCount(); i++) {
-                    if (incSubModel.getValueAt(i, 0).equals(editSubject.getText())) {
-                        incSubModel.setValueAt(newTime.getText(), i, 1);
-                    }
-                }
+                changeSubjectTime(editSubject.getText(),
+                        formatSeconds(subjectManager.getSubject(editSubject.getText()).getSecondsRemaining()),
+                        newTime.getText());
             }
         }
+    }
+
+    private void changeSubjectDesc(String origDesc, String newDesc) {
+        subjectManager.getSubject(origDesc).setDescription(newDesc);
+        for (int i = 0; i < incSubModel.getRowCount(); i++) {
+            if (incSubModel.getValueAt(i, 0).equals(origDesc)) {
+                incSubModel.setValueAt(newDesc, i, 0);
+                subjectManager.updateSubjectLog(origDesc + " Description Changed to: " + newDesc);
+            }
+        }
+    }
+
+    private void changeSubjectTime(String desc, String origSecs, String newSecs) {
+        try {
+            subjectManager.getSubject(desc)
+                    .setSecondsRemaining(getTimeFromString(newSecs.split(":", 3)));
+        } catch (Exception e) {
+            //
+        }
+        for (int i = 0; i < incSubModel.getRowCount(); i++) {
+            if (incSubModel.getValueAt(i, 0).equals(desc)) {
+                incSubModel.setValueAt(newSecs, i, 1);
+            }
+        }
+        subjectManager.updateSubjectLog(desc + " Time Remaining Changed From: " + origSecs + " to: " + newSecs);
     }
 
     private void tryRemoveSubject(JTextField removeSubject) {
@@ -461,7 +498,7 @@ public class TimerApp extends JFrame {
     }
 
     //effects: Helper function that updates relevant subject UI elements
-    public static void updateSubjectsUI(ArrayList<Subject> s, ArrayList<Subject> cs) {
+    public static void updateSubjectsUI(ArrayList<Subject> s) {
         if (incSubModel == null) {
             String[] incSubjectsColumns = {"description", "time remaining"};
             incSubModel = new DefaultTableModel(incSubjectsColumns, 1);
@@ -477,14 +514,14 @@ public class TimerApp extends JFrame {
         }
     }
 
-    private void updateLoadSubjectUI(ArrayList<Subject> sub, ArrayList<Subject> csub) {
+    private void updateLoadSubjectUI(ArrayList<Subject> incSub, ArrayList<Subject> comSub) {
         incSubModel.setRowCount(0);
         comSubModel.setRowCount(0);
-        for (Subject s : sub) {
+        for (Subject s : incSub) {
             Object[] row = {s.getDescription(), formatSeconds(s.getSecondsRemaining())};
             incSubModel.addRow(row);
         }
-        for (Subject cs : csub) {
+        for (Subject cs : comSub) {
             Object[] row = {cs.getDescription(), formatSeconds(cs.getSecondsDone())};
             comSubModel.addRow(row);
         }
@@ -518,13 +555,5 @@ public class TimerApp extends JFrame {
             i = 2;
         }
         return returnStr.append(String.format(format, output.get(i))).toString();
-    }
-
-    private void briefPause() {
-        try {
-            Thread.sleep(900);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
     }
 }

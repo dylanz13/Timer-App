@@ -39,3 +39,44 @@ As a user, I want to be able to be able to load my subject list and current time
 - You can locate my visual component by entering a time in the main application, right next to "Enter a Time: ", where a timer alongside a visual representation of said timer will start.
 - You can save the state of my application by clicking the "Save to File" button
 - You can reload the state of my application by click the "Load to File" button
+
+## Phase 4: Task 2
+<ul>
+An example of EventLog printing out in the console:
+
+Mon Apr 10 11:37:24 PDT 2023 <br>
+Loaded Previous TimerApp State from File.
+
+Mon Apr 10 11:37:29 PDT 2023 <br>
+Added Subject: Math
+
+Mon Apr 10 11:37:41 PDT 2023 <br>
+Math Description Changed to: Linguistics
+
+Mon Apr 10 11:37:51 PDT 2023 <br>
+Linguistics Time Remaining Changed From: 2:00 to: 1:50
+
+Mon Apr 10 11:37:58 PDT 2023 <br>
+Removed Subject: Linguistics
+
+Mon Apr 10 11:38:07 PDT 2023 <br>
+Started Timer for: 20
+
+Mon Apr 10 11:38:09 PDT 2023 <br>
+Paused Timer.
+
+Mon Apr 10 11:38:14 PDT 2023 <br>
+Resumed Timer.
+
+Mon Apr 10 11:38:32 PDT 2023 <br>
+Finished Timer.
+
+Mon Apr 10 11:38:34 PDT 2023 <br>
+Saved Current TimerApp State to File.
+
+Mon Apr 10 11:38:40 PDT 2023 <br>
+Started Timer for: 20
+
+Mon Apr 10 11:38:41 PDT 2023 <br>
+Cancelled Timer.
+</ul>

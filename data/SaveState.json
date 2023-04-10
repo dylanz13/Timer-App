@@ -1,22 +1,19 @@
 {
-    "Subjects of Focus": [
+    "Subjects of Focus": [{
+        "name": "Engl",
+        "time left": 40,
+        "time elapsed": 51
+    }],
+    "Completed Subjects": [
         {
-            "name": "Phys",
-            "time left": 790,
-            "details": [],
-            "time elapsed": 20
+            "name": "Math",
+            "time left": 0,
+            "time elapsed": 100
         },
         {
-            "name": "Engl",
-            "time left": 91,
-            "details": [],
-            "time elapsed": 0
+            "name": "Reading",
+            "time left": 0,
+            "time elapsed": 50
         }
-    ],
-    "Completed Subjects": [{
-        "name": "Math",
-        "time left": 0,
-        "details": [],
-        "time elapsed": 100
-    }]
+    ]
 }
