@@ -34,17 +34,19 @@ public class Event {
      * Gets the description of this event.
      * @return  the description of the event
      */
-    public String getDescription () {
+    public String getDescription() {
         return description;
     }
 
     @Override
     public boolean equals(Object other) {
-        if (other == null)
+        if (other == null) {
             return false;
+        }
 
-        if (other.getClass() != this.getClass())
+        if (other.getClass() != this.getClass()) {
             return false;
+        }
 
         Event otherEvent = (Event) other;
 

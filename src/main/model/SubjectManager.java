@@ -37,14 +37,14 @@ public class SubjectManager {
 
     //Helper to remove subject with given description
     private void tryRemoveSubject(ArrayList<Subject> s, String desc) {
-        Iterator<Subject> iter = s.iterator();
+        Iterator<Subject> iterator = s.iterator();
 
-        while (iter.hasNext()) {
-            Subject subject = iter.next();
+        while (iterator.hasNext()) {
+            Subject subject = iterator.next();
 
             if (subject.getDescription().equals(desc)) {
                 EventLog.getInstance().logEvent(new Event("Removed Subject: " + subject.getDescription()));
-                iter.remove();
+                iterator.remove();
             }
         }
     }

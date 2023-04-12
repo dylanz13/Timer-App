@@ -14,7 +14,7 @@ public class EventLog implements Iterable<Event> {
      * (Singleton Design Pattern).
      */
     private EventLog() {
-        events = new ArrayList<Event>();
+        events = new ArrayList<>();
     }
 
     /**
@@ -24,8 +24,9 @@ public class EventLog implements Iterable<Event> {
      * @return  instance of EventLog
      */
     public static EventLog getInstance() {
-        if (theLog == null)
+        if (theLog == null) {
             theLog = new EventLog();
+        }
 
         return theLog;
     }
