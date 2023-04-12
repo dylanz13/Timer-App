@@ -1,6 +1,6 @@
 package ui;
 
-import model.Event;
+
 import model.EventLog;
 import model.SubjectManager;
 import model.Timer;
@@ -69,12 +69,9 @@ public class TimerApp extends JFrame {
     //effects: prints out all EventLog events on JFrame being closed
     public void addWindowListener() {
         this.addWindowListener(new java.awt.event.WindowAdapter() {
-
             @Override
             public void windowClosing(WindowEvent e) {
-                for (Event event : EventLog.getInstance()) {
-                    System.out.println(event + "\n\r");
-                }
+                EventLog.getInstance().print();
             }
         });
     }

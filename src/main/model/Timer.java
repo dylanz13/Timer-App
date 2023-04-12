@@ -92,6 +92,7 @@ public class Timer {
             s.get(0).countDown();
             TimerApp.updateSubjectsUI(s);
             if (s.get(0).getSecondsRemaining() <= 0) {
+                EventLog.getInstance().logEvent(new Event("Finished Subject: " + s.get(0).getDescription()));
                 cs.add(s.get(0));
                 s.remove(0);
             }

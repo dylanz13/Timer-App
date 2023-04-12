@@ -23,11 +23,11 @@ to become more convenient for anybody to use.
 ## User Stories
 <ul>
 As a user, I want to be able to add a subject of focus <br>
-As a user, I want to be able to add a description to any selected subject <br>
+As a user, I want to be able to add a subject to a list of subjects <br>
 As a user, I want to be able to add a time to the end of any selected subject <br>
 As a user, I want to be able to see the past subjects that I have completed<br>
 As a user, I want to be able to select a time that will count down as I do my work. This timer should also deduct time from the time I have
-assigned any given subject of focus, printing out an alert when this happens.<br>
+assigned any given subject of focus.<br>
 As a user, I want to be able to save my subject list and current timer state to file (if I so choose) <br>
 As a user, I want to be able to be able to load my subject list and current timer state from file (if I so choose) <br>
 </ul>
@@ -40,9 +40,9 @@ As a user, I want to be able to be able to load my subject list and current time
 - You can save the state of my application by clicking the "Save to File" button
 - You can reload the state of my application by click the "Load to File" button
 
-## Phase 4: Task 2
+### Phase 4: Task 2
+**An example of EventLog printing out in the console:**
 <ul>
-An example of EventLog printing out in the console:
 
 Mon Apr 10 11:37:24 PDT 2023 <br>
 Loaded Previous TimerApp State from File.
@@ -79,4 +79,14 @@ Started Timer for: 20
 
 Mon Apr 10 11:38:41 PDT 2023 <br>
 Cancelled Timer.
+</ul>
+
+### Phase 4: Task 3
+
+<ul>
+If I had more time to refactor my program, I would definitely hope to decrease the coupling present in many of my classes.
+I believe my program's cohesion is high enough, however, I am not a fan of public static methods in TimerApp that's used in
+Timer, for example. Or the UI methods I've also called in Timer from TimerApp. This was done as a new thread was made, and 
+this was the only solution I could find (that I could reasonably implement). My first approach to solving this would be
+changing the way I update the UI elements in TimerApp, to not call it in my Timer class.
 </ul>
