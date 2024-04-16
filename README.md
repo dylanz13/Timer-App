@@ -1,92 +1,62 @@
 # Study Application
 
-### An application providing the Pomodoro and Flowtime Study Techniques
+**An application providing the Pomodoro and Flowtime Study Techniques**
 
-**What will the application do**?
-<ul> The application will make focusing on any type of work more painless
-by utilizing the pomodoro and flowtime study techniques.
-</ul>
+## Overview
 
-**Who will use it**?
-<ul> Anybody who needs to get some work done - anything that requires time and effort - can 
-appreciate the convenience this application brings.
-</ul>
+This application is designed to help users improve their focus and productivity when tackling tasks that require sustained effort. It implements two popular study techniques:
 
-**Why is this project of interest to me**?
+* **Pomodoro Technique:** Breaks down work into intervals traditionally 25 minutes long, separated by short breaks.
+* **Flowtime Technique:** Encourages longer periods of uninterrupted focus with customizable work and break intervals.
 
-<ul> As a full-time student, I have relied heavily on both the pomodoro and flowtime studying
-techniques, so I thought it would be great if to make an application that allows these methods
-to become more convenient for anybody to use.
-</ul>
+## Target Audience
 
+* Students
+* Professionals
+* Anyone who needs to concentrate on challenging work
+
+## Motivation
+
+As a student, I've personally benefited from the Pomodoro and Flowtime techniques. This application aims to make these methods more accessible and convenient.
 
 ## User Stories
-<ul>
-As a user, I want to be able to add a subject of focus <br>
-As a user, I want to be able to add a subject to a list of subjects <br>
-As a user, I want to be able to add a time to the end of any selected subject <br>
-As a user, I want to be able to see the past subjects that I have completed<br>
-As a user, I want to be able to select a time that will count down as I do my work. This timer should also deduct time from the time I have
-assigned any given subject of focus.<br>
-As a user, I want to be able to save my subject list and current timer state to file (if I so choose) <br>
-As a user, I want to be able to be able to load my subject list and current timer state from file (if I so choose) <br>
-</ul>
 
-# Instructions for Grader
+* As a user, I want to be able to add a subject of focus.
+* As a user, I want to be able to add a subject to a list of subjects.
+* As a user, I want to be able to add a time to the end of any selected subject.
+* As a user, I want to be able to see the past subjects that I have completed.
+* As a user, I want to be able to select a customizable timer that will count down as I work and deduct time from my assigned subject.
+* As a user, I want to be able to save my subject list and current timer state to a file.
+* As a user, I want to be able to load my subject list and current timer state from a file.
 
-- You can generate the first required action related to adding Xs to a Y by clicking the "Modify" button and adding the required 'description' and 'time' remaining (beware that the time entered must be formatted in 'HH:MM:SS)
-- You can generate the second required action related to adding Xs to a Y by clicking the "Modify" button and changing the edit fields
-- You can locate my visual component by entering a time in the main application, right next to "Enter a Time: ", where a timer alongside a visual representation of said timer will start.
-- You can save the state of my application by clicking the "Save to File" button
-- You can reload the state of my application by click the "Load to File" button
+## Instructions for Grader
 
-### Phase 4: Task 2
-**An example of EventLog printing out in the console:**
-<ul>
+1. **Adding/Modifying Subjects:**
+   * Use the "Modify" button to add subjects with a description and time allocation (format: HH:MM:SS).
+   * Edit subjects using the same "Modify" button.
 
-Mon Apr 10 11:37:24 PDT 2023 <br>
+2. **Visual Timer**
+   * Enter a time next to "Enter a Time:" to start the timer and its visual representation. 
+
+3. **Saving/Loading State:**
+   * Click "Save to File" to save the application state.
+   * Click "Load from File" to restore a previous session.
+
+## EventLog Example
+
+Mon Apr 10 11:37:24 PDT 2023
 Loaded Previous TimerApp State from File.
 
-Mon Apr 10 11:37:29 PDT 2023 <br>
+Mon Apr 10 11:37:29 PDT 2023
 Added Subject: Math
 
-Mon Apr 10 11:37:41 PDT 2023 <br>
-Math Description Changed to: Linguistics
+... [Additional Events]
 
-Mon Apr 10 11:37:51 PDT 2023 <br>
-Linguistics Time Remaining Changed From: 2:00 to: 1:50
+## Technical Notes
 
-Mon Apr 10 11:37:58 PDT 2023 <br>
-Removed Subject: Linguistics
+* **Language:** Java
+* **Features:** JSON storage, timer threading
 
-Mon Apr 10 11:38:07 PDT 2023 <br>
-Started Timer for: 20
+## Potential Improvements
 
-Mon Apr 10 11:38:09 PDT 2023 <br>
-Paused Timer.
-
-Mon Apr 10 11:38:14 PDT 2023 <br>
-Resumed Timer.
-
-Mon Apr 10 11:38:32 PDT 2023 <br>
-Finished Timer.
-
-Mon Apr 10 11:38:34 PDT 2023 <br>
-Saved Current TimerApp State to File.
-
-Mon Apr 10 11:38:40 PDT 2023 <br>
-Started Timer for: 20
-
-Mon Apr 10 11:38:41 PDT 2023 <br>
-Cancelled Timer.
-</ul>
-
-### Phase 4: Task 3
-
-<ul>
-If I had more time to refactor my program, I would definitely hope to decrease the coupling present in many of my classes.
-I believe my program's cohesion is high enough, however, I am not a fan of public static methods in TimerApp that's used in
-Timer, for example. Or the UI methods I've also called in Timer from TimerApp. This was done as a new thread was made, and 
-this was the only solution I could find (that I could reasonably implement). My first approach to solving this would be
-changing the way I update the UI elements in TimerApp, to not call it in my Timer class.
-</ul>
+* **Reduce Coupling:** Explore ways to decrease coupling between classes, particularly between the `TimerApp` and `Timer` classes. This may involve rethinking how UI elements are updated. 
