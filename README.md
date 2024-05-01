@@ -1,62 +1,55 @@
-# Study Application
+# Focus Keeper: A Study Timer App
 
-**An application providing the Pomodoro and Flowtime Study Techniques**
+**Boost your focus and productivity with the Pomodoro and Flowtime Techniques!**
 
-## Overview
+Focus Keeper is a free, user-friendly application designed to help you tackle any task requiring sustained concentration. It implements two popular study techniques:
 
-This application is designed to help users improve their focus and productivity when tackling tasks that require sustained effort. It implements two popular study techniques:
+* **Pomodoro Technique:** Break down work into focused intervals (usually 25 minutes) separated by short breaks to maintain focus and avoid burnout.
+* **Flowtime Technique:** Encourage longer periods of uninterrupted focus with customizable work and break intervals, ideal for deep work sessions.
 
-* **Pomodoro Technique:** Breaks down work into intervals traditionally 25 minutes long, separated by short breaks.
-* **Flowtime Technique:** Encourages longer periods of uninterrupted focus with customizable work and break intervals.
+## Who can benefit from Focus Keeper?
 
-## Target Audience
+* Students: Ace exams and crush deadlines by maximizing your study sessions.
+* Professionals: Enhance your productivity and concentration for work projects.
+* Anyone: Get things done by staying focused on challenging tasks, whether it's writing, coding, or learning a new skill.
 
-* Students
-* Professionals
-* Anyone who needs to concentrate on challenging work
+## My Inspiration
 
-## Motivation
+As a student, I've experienced the power of the Pomodoro and Flowtime techniques firsthand. Focus Keeper aims to make these methods readily available and convenient for everyone.
 
-As a student, I've personally benefited from the Pomodoro and Flowtime techniques. This application aims to make these methods more accessible and convenient.
+## Take Control of Your Focus
 
-## User Stories
+Focus Keeper empowers you to:
 
-* As a user, I want to be able to add a subject of focus.
-* As a user, I want to be able to add a subject to a list of subjects.
-* As a user, I want to be able to add a time to the end of any selected subject.
-* As a user, I want to be able to see the past subjects that I have completed.
-* As a user, I want to be able to select a customizable timer that will count down as I work and deduct time from my assigned subject.
-* As a user, I want to be able to save my subject list and current timer state to a file.
-* As a user, I want to be able to load my subject list and current timer state from a file.
+* **Manage Subjects:** Add tasks, projects, or topics you need to focus on, with optional descriptions.
+* **Customize Timers:** Set timers for each subject using the Pomodoro Technique's 25-minute intervals or create custom work and break durations for Flowtime.
+* **Visualize Progress:** A clear timer display keeps you motivated and on track.
+* **Track History:** Review completed subjects and analyze your study patterns.
+* **Save & Load Sessions:** Save your study plan and progress to resume later, or pick up where you left off with a single click.
 
-## Instructions for Grader
+## Getting Started with Focus Keeper
 
-1. **Adding/Modifying Subjects:**
-   * Use the "Modify" button to add subjects with a description and time allocation (format: HH:MM:SS).
-   * Edit subjects using the same "Modify" button.
+1. **Adding/Editing Subjects:**
+   * Click the "Modify Subject" button to add a new subject or edit an existing one.
+   * Enter a descriptive name (e.g., "History Essay") and an optional time allocation (format: 00:25:00 for 25 minutes).
+2. **Start Your Focus Session:**
+   * Enter a desired time next to "Enter a Time" and click "Start Timer" to begin your focused work session.
+   * The timer will visually represent your progress.
+3. **Save & Load Your Work:**
+   * Click "Save to File" to save your current subject list and timer state for later use.
+   * Click "Load from File" to pick up where you left off in a previous study session.
 
-2. **Visual Timer**
-   * Enter a time next to "Enter a Time:" to start the timer and its visual representation. 
+## Peek Under the Hood (Technical Details - Optional)
 
-3. **Saving/Loading State:**
-   * Click "Save to File" to save the application state.
-   * Click "Load from File" to restore a previous session.
+* **Built with Java:** This application is programmed in Java, ensuring smooth operation on most computer systems.
+* **Data Persistence:** Focus Keeper utilizes JSON for efficient file storage, allowing you to save and load your study plans.
+* **Threaded Timers:** The timer operates independently, ensuring a seamless user experience without interrupting your workflow.
+* **User-Friendly Interface:** The intuitive Java Swing UI makes Focus Keeper easy to navigate and use.
 
-## EventLog Example
+## Making Focus Keeper Even Better
 
-Mon Apr 10 11:37:24 PDT 2023
-Loaded Previous TimerApp State from File.
+This project is constantly evolving. Here are some potential improvements in the pipeline:
 
-Mon Apr 10 11:37:29 PDT 2023
-Added Subject: Math
+* **Reduced Coupling:** Enhance code maintainability by minimizing dependencies between program components.
 
-... [Additional Events]
-
-## Technical Notes
-
-* **Language:** Java
-* **Features:** JSON storage, timer threading
-
-## Potential Improvements
-
-* **Reduce Coupling:** Explore ways to decrease coupling between classes, particularly between the `TimerApp` and `Timer` classes. This may involve rethinking how UI elements are updated. 
+We appreciate your feedback! Feel free to share your thoughts and suggestions for future improvements.
