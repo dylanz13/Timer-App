@@ -149,7 +149,7 @@ public class TimerApp extends JFrame {
                 int i = getTimeFromString(split);
                 startTimer(i, shape);
                 shape.setTotTime(i);
-                shape.getTimeTextField().setText(formatSeconds(i));
+                shape.setTimeText(formatSeconds(i));
                 time.setText("HH:MM:SS");
                 time.setVisible(false);
                 pane.setVisible(true);
@@ -172,7 +172,7 @@ public class TimerApp extends JFrame {
     }
 
     private void addSubjectsUI(GridBagConstraints c, JPanel p) {
-        String[] incSubjectsColumns = {"description", "time remaining"};
+        String[] incSubjectsColumns = {"Description", "Time remaining"};
         incSubModel = new DefaultTableModel(incSubjectsColumns, 0);
         JTable incTable = new JTable(incSubModel);
         TableColumn column = incTable.getColumnModel().getColumn(0);
@@ -180,7 +180,7 @@ public class TimerApp extends JFrame {
         column = incTable.getColumnModel().getColumn(1);
         column.setPreferredWidth(30);
 
-        String[] comSubjectsColumns = {"description", "time elapsed"};
+        String[] comSubjectsColumns = {"Description", "Time elapsed"};
         comSubModel = new DefaultTableModel(comSubjectsColumns, 0);
         JTable comTable = new JTable(comSubModel);
         column = comTable.getColumnModel().getColumn(0);
@@ -441,9 +441,8 @@ public class TimerApp extends JFrame {
         try {
             updateTimerLoadingUI((boolean) objects.get("run?"), (int) objects.get("secs"));
         } catch (Exception e) {
-            if (timer != null) {
-                timer.stop();
-            }
+            //Oh, well!
+            //Object "run?" doesn't exist.
         }
     }
 
@@ -451,18 +450,19 @@ public class TimerApp extends JFrame {
     private void updateTimerLoadingUI(Boolean b, int i) {
         if (timer != null) {
             timer.stop();
+            timer = null;
+            updateTimerUI();
         }
 
-        if (b && timer == null) {
-            shape.setTotTime(i);
-            shape.getTimeTextField().setText(formatSeconds(i));
+        if (b) {
             startTimer(i, shape);
+            shape.setTotTime(i);
+            shape.setTimeText(formatSeconds(i));
+            time.setText("HH:MM:SS");
             time.setVisible(false);
             pane.setVisible(true);
-        } else if (timer == null) {
-            TimerApp.timer = new Timer(i);
-            System.out.println("Timer Loaded with "
-                    + formatSeconds(timer.getRemainingTime()) + " remaining.");
+        } else {
+            //TODO: Implement Paused Loaded State
         }
     }
 
@@ -486,7 +486,7 @@ public class TimerApp extends JFrame {
 
     //effects: Helper function that resets relevant UI elements
     private void updateTimerUI() {
-        shape.getTimeTextField().setText("00:00");
+        shape.setTimeText("00:00");
         shape.setTotTime(0);
         shape.resetProgress();
         shape.update();

@@ -29,13 +29,14 @@ public class Draw extends JPanel {
         time.setText(str);
         time.setEditable(false);
         time.setHorizontalAlignment(SwingConstants.CENTER);
-        time.setBorder(BorderFactory.createLineBorder(new Color(56,52,44), 1));
+        time.setBorder(null); // BorderFactory.createLineBorder(new Color(56,52,44), 1)
+        time.setOpaque(false);
         this.add(time, c);
         totTime = 0;
     }
 
-    public JTextField getTimeTextField() {
-        return time;
+    public void setTimeText(String text) {
+        time.setText(text);
     }
 
     public void setTotTime(int i) {
@@ -45,14 +46,15 @@ public class Draw extends JPanel {
     public void updateProgress() {
         double endAngle = 0;
         try {
-            endAngle = (double) TimerApp.getTimeFromString(time.getText().split(":", 3)) / totTime;
+            endAngle = - ((double) TimerApp.getTimeFromString(time.getText().split(":", 3))
+                    / totTime) * 360;
         } catch (Exception e) {
             //Oh, well!
         }
-        Arc2D arc1 = new Arc2D.Double(20, 20,160,160,0,
-                endAngle * -360, Arc2D.PIE);
-        Arc2D arc2 = new Arc2D.Double(40, 40, 120, 120, 0,
-                endAngle * -360, Arc2D.PIE);
+
+        Arc2D arc1 = new Arc2D.Double(20, 20, 160, 160, 0, endAngle, Arc2D.PIE);
+        Arc2D arc2 = new Arc2D.Double(40, 40, 120, 120, 0, endAngle - 1, Arc2D.PIE);
+
         Area area = new Area(arc1);
         area.subtract(new Area(arc2));
         progress = area;
@@ -70,46 +72,49 @@ public class Draw extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
-        Shape ring = createRingShape();
+        Shape ring = createRing();
 
         if (progress != null) {
-            g2D.setColor(new Color(255, 127, 80));
-            g2D.fill(ring);
-            g2D.draw(ring);
-            g2D.setColor(new Color(56,52,44));
-            g2D.fill(progress);
-            g2D.draw(progress);
+            drawHelper(g2D, new Color(255, 127, 80), ring);
+            drawHelper(g2D, new Color(56,52,44), progress);
             g2D.setColor(new Color(255, 127, 80));
             g2D.setStroke(new BasicStroke(5));
             try {
-                g2D.drawLine(100,100, 100 + (int) (79 * Math.cos(getRadians())),
-                        100 + (int) (79 * Math.sin(getRadians())));
+                g2D.drawLine(100 + (int) (20 * Math.cos(getRadians())),
+                        100 + (int) (20 * Math.sin(getRadians())),
+                        100 + (int) (78.8 * Math.cos(getRadians())),
+                        100 + (int) (78.8 * Math.sin(getRadians())));
             } catch (Exception e) {
                 // Oh, well!
             }
+            g2D.setStroke(new BasicStroke(1));
         } else {
-            g2D.setColor(new Color(56,52,44));
-            g2D.fill(ring);
-            g2D.draw(ring);
+            drawHelper(g2D, new Color(56,52,44), ring);
         }
+    }
+
+    private void drawHelper(Graphics2D g2D, Color c, Shape s) {
+        g2D.setColor(c);
+        g2D.fill(s);
+        g2D.draw(s);
     }
 
     private double getRadians() throws Exception {
         return Math.toRadians(((double) TimerApp.getTimeFromString(time.getText().split(":",3)) / totTime)
-                * 360 - 1);
+                * 360);
     }
 
-    private static Shape createRingShape() {
+    private static Shape createRing() {
         Ellipse2D outer = new Ellipse2D.Double(
                 100 - 80,
                 100 - 80,
-                80 + 80,
-                80 + 80);
+                80 << 1,
+                80 << 1);
         Ellipse2D inner = new Ellipse2D.Double(
                 100 - 80 + 20,
                 100 - 80 + 20,
-                80 + 80 - 20 - 20,
-                80 + 80 - 20 - 20);
+                (80 << 1) - (20 << 1),
+                (80 << 1) - (20 << 1));
         Area area = new Area(outer);
         area.subtract(new Area(inner));
         return area;

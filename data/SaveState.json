@@ -1,19 +1,19 @@
 {
-    "Subjects of Focus": [{
-        "name": "Engl",
-        "time left": 40,
-        "time elapsed": 51
-    }],
-    "Completed Subjects": [
+    "Subjects of Focus": [
         {
-            "name": "Math",
-            "time left": 0,
-            "time elapsed": 100
+            "name": "STAT",
+            "time left": 10,
+            "time elapsed": 80
         },
         {
-            "name": "Reading",
-            "time left": 0,
-            "time elapsed": 50
+            "name": "Math",
+            "time left": 30,
+            "time elapsed": 0
         }
-    ]
+    ],
+    "Timer": {
+        "is Running?": true,
+        "Time Remaining": 10
+    },
+    "Completed Subjects": []
 }

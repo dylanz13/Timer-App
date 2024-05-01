@@ -42,7 +42,7 @@ public class Timer {
 
             if (prevSec != elapsedSeconds) {
                 this.remainingTime--;
-                shape.getTimeTextField().setText(TimerApp.formatSeconds(this.remainingTime));
+                shape.setTimeText(TimerApp.formatSeconds(this.remainingTime));
                 shape.updateProgress();
                 shape.update();
                 this.prevSec = (int) elapsedSeconds;
